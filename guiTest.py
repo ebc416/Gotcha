@@ -1,6 +1,9 @@
 import tkinter as tk
-from tkinter import filedialog
+import time
+#from tkinter import filedialog
+from tkinter.ttk import *
 from tkinter import *
+from tkinter.filedialog import askopenfile
 
 root = tk.Tk()
 root.title("GOTCHA")
@@ -11,31 +14,100 @@ logo = tk.PhotoImage(file="Gotcha.png")
 top_frame = tk.Frame(root).pack()
 bottom_frame = tk.Frame(root).pack(side = "bottom")
 
-w1 = tk.Label(root, image=logo).pack(side="top")
-text1 = "None"
+w1 = tk.Label(root, image=logo).pack(side="top",pady = 10)
 
-def UploadAction():
-    fN = filedialog.askopenfilename()
-    fN2 = open(fN, "r")
 
-    text1 = fN2.read()
-
-    fN2.close()
-
-btn3 = tk.Button(root,bottom_frame,text = "Import File", fg = "red",command=UploadAction).pack(side = "right")
-
-btn4 = tk.Button(root,bottom_frame,text = "Import File", fg = "green",command=UploadAction).pack(side = "left")
 
 T = tk.Text(root, height=10, width=30,borderwidth = 2, relief="groove")
 T.pack(side=tk.RIGHT,padx=10)
 
-T.insert(tk.END, text1)
-
 T2 = tk.Text(root, height=10, width=30,borderwidth = 2, relief="groove")
 T2.pack(side=tk.LEFT, padx=10)
 
-T2.insert(tk.END, text1)
 
-#testing changes for github
+#def UploadAction():filename = filedialog.askopenfilename()
+
+def open_file1():
+    file = askopenfile(mode ='r', filetypes =[('Text files', '*.txt')])
+    if file is not None:
+        content = file.read()
+        #print(content)
+    T.configure(state=NORMAL)
+    T.delete(0.0, "end")
+    T.insert(0.0,content)
+    T.configure(state=DISABLED)
+
+def open_file2():
+    file = askopenfile(mode ='r', filetypes =[('Text files', '*.txt')])
+    if file is not None:
+        content = file.read()
+        #print(content)
+    T2.configure(state=NORMAL)
+    T2.delete(0.0, "end")
+    T2.insert(0.0,content)
+    T2.configure(state=DISABLED)
+
+btn3 = tk.Button(root,bottom_frame,text = "Import File", fg = "red",command=open_file1).pack(side = "right")
+btn4 = tk.Button(root,bottom_frame,text = "Import File", fg = "green",command=open_file2).pack(side = "left")
+
+#widget_object = Progressbar(parent, **options)
+# Progress bar widget
+pDisplay ='Plagiarism Percentage'
+DisplayM = Message(root, text = pDisplay)
+DisplayM.config(bg='lightgreen',width=200)
+DisplayM.pack(side = "top")
+
+progress = Progressbar(root, orient = HORIZONTAL,
+              length = 200, mode = 'determinate')
+# Function responsible for the updation
+# of the progress bar value
+
+def bar():
+    import time
+    progress['value'] = 20
+    root.update_idletasks()
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+    time.sleep(1)
+
+    progress['value'] = 40
+    root.update_idletasks()
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+
+    time.sleep(1)
+
+    progress['value'] = 50
+    root.update_idletasks()
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+
+    time.sleep(1)
+
+    progress['value'] = 60
+    root.update_idletasks()
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+
+    time.sleep(1)
+
+    progress['value'] = 80
+    root.update_idletasks()
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+
+    time.sleep(1)
+
+    progress['value'] = 100
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+    DisplayM.config(width=50)
+    DisplayM.pack()
+
+progress.pack(pady = 1,side = "top")
+# This button will initialize
+# the progress bar
+Button(root, text = 'Scan', command = bar).pack(pady = 10, side = "bottom")
+
 
 tk.mainloop()
