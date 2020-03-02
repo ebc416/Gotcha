@@ -54,7 +54,7 @@ btn4 = tk.Button(root,bottom_frame,text = "Import File", fg = "green",command=op
 def alert_popup(title, message):
     canvas = tk.Canvas(root2,width = 300, height = 200, bg = 'white')
     canvas.pack(expand = YES, fill = BOTH)
-    gif1 = PhotoImage(file = '/Users/khoale/Documents/GitHub/Gotcha/FBI.gif')
+    gif1 = PhotoImage(file = 'C:\\Users\\efrai\\Desktop\\Gotcha\\FBI.gif')
     canvas.create_image(50, 10, image = gif1, anchor = NW)
     #popGif = tk.Label(root2, image=logo2).pack(side="top",pady = 10)
     w = 400     # popup window width
