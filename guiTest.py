@@ -82,43 +82,42 @@ progress = Progressbar(root, orient = HORIZONTAL,
 def bar():
     import time
     progress['value'] = 20
+    root.update_idletasks()
     pDisplay = progress['value']
     DisplayM = Message(root, text = pDisplay)
-    DisplayM.pack()
-    root.update_idletasks()
     time.sleep(1)
 
     progress['value'] = 40
-    pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
-    DisplayM.pack()
     root.update_idletasks()
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+
     time.sleep(1)
 
     progress['value'] = 50
-    pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
-    DisplayM.pack()
     root.update_idletasks()
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+
     time.sleep(1)
 
     progress['value'] = 60
-    pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
-    DisplayM.pack()
     root.update_idletasks()
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+
     time.sleep(1)
 
     progress['value'] = 80
-    pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
-    DisplayM.pack()
     root.update_idletasks()
+    pDisplay = progress['value']
+    DisplayM = Message(root, text = pDisplay)
+
     time.sleep(1)
 
     progress['value'] = 100
     pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
+    DisplayM = Message(root, text = pDisplay)
     DisplayM.config(width=50)
     DisplayM.pack()
     if pDisplay == 100:
