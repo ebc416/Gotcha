@@ -7,7 +7,6 @@ from tkinter.filedialog import askopenfile
 
 root = tk.Tk()
 root.title("GOTCHA")
-root2 = tk.Toplevel()
 logo = tk.PhotoImage(file="Gotcha.png")
 logo2 = tk.PhotoImage(file="FBI.gif")
 #fileName2 = filedialog.askopenfilename()
@@ -52,6 +51,7 @@ btn3 = tk.Button(root,bottom_frame,text = "Import File", fg = "red",command=open
 btn4 = tk.Button(root,bottom_frame,text = "Import File", fg = "green",command=open_file2).pack(side = "left")
 
 def alert_popup(title, message):
+    root2 = tk.Toplevel()
     canvas = tk.Canvas(root2,width = 300, height = 200, bg = 'white')
     canvas.pack(expand = YES, fill = BOTH)
     gif1 = PhotoImage(file = '/Users/khoale/Documents/GitHub/Gotcha/FBI.gif')
