@@ -8,7 +8,6 @@ from tkinter.filedialog import askopenfile
 from urllib.request import urlopen
 from PIL import Image
 import requests
-from io import BytesIO
 
 
 root = tk.Tk()
