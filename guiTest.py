@@ -1,21 +1,36 @@
 import tkinter as tk
 import time
+import base64
 #from tkinter import filedialog
 from tkinter.ttk import *
 from tkinter import *
 from tkinter.filedialog import askopenfile
+from urllib.request import urlopen
+from PIL import Image
+import requests
+from io import BytesIO
+
 
 root = tk.Tk()
 root.title("GOTCHA")
-logo = tk.PhotoImage(file="Gotcha.png")
-logo2 = tk.PhotoImage(file="FBI.gif")
-#fileName2 = filedialog.askopenfilename()
+url = "https://i.imgur.com/HZCR1G2.png"
+url2 = "https://i.imgur.com/ElKpHkG.png"
+
+respond = requests.get(url2)
+img_byt = urlopen(url2).read()
+img_b64 = base64.encodestring(img_byt)
+logo = tk.PhotoImage(data = img_b64)
+
+response = requests.get(url)
+image_bt = urlopen(url).read()
+image_FBI = base64.encodestring(image_bt)
+logo2 = tk.PhotoImage(data = image_FBI)
 
 
 top_frame = tk.Frame(root).pack()
 bottom_frame = tk.Frame(root).pack(side = "bottom")
 
-w1 = tk.Label(root, image=logo).pack(side="top",pady = 10)
+w1 = tk.Label(root, image = logo).pack(side="top",pady = 10)
 
 
 T = tk.Text(root, height=10, width=30,borderwidth = 2, relief="groove")
@@ -23,7 +38,6 @@ T.pack(side=tk.RIGHT,padx=10)
 
 T2 = tk.Text(root, height=10, width=30,borderwidth = 2, relief="groove")
 T2.pack(side=tk.LEFT, padx=10)
-
 
 #def UploadAction():filename = filedialog.askopenfilename()
 
@@ -49,13 +63,12 @@ def open_file2():
 
 btn3 = tk.Button(root,bottom_frame,text = "Import File", fg = "red",command=open_file1).pack(side = "right")
 btn4 = tk.Button(root,bottom_frame,text = "Import File", fg = "green",command=open_file2).pack(side = "left")
-
+#/Users/khoale/Documents/GitHub/Gotcha
 def alert_popup(title, message):
     root2 = tk.Toplevel()
-    canvas = tk.Canvas(root2,width = 300, height = 200, bg = 'white')
+    canvas = tk.Canvas(root2,width = 925, height = 500, bg = 'white')
     canvas.pack(expand = YES, fill = BOTH)
-    gif1 = PhotoImage(file = 'C:\\Users\\efrai\\Desktop\\Gotcha\\FBI.gif')
-    canvas.create_image(50, 10, image = gif1, anchor = NW)
+    canvas.create_image(50, 50, image = logo2, anchor = NW)
     #popGif = tk.Label(root2, image=logo2).pack(side="top",pady = 10)
     w = 400     # popup window width
     h = 200     # popup window height
