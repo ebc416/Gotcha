@@ -8,7 +8,8 @@ from tkinter.filedialog import askopenfile
 from urllib.request import urlopen
 from PIL import Image
 import requests
-from io import BytesIO
+from functions import pCheck
+
 
 
 root = tk.Tk()
@@ -40,10 +41,11 @@ T2 = tk.Text(root, height=10, width=30,borderwidth = 2, relief="groove")
 T2.pack(side=tk.LEFT, padx=10)
 
 #def UploadAction():filename = filedialog.askopenfilename()
-
+content = "tested"
 def open_file1():
     file = askopenfile(mode ='r', filetypes =[('Text files', '*.txt')])
     if file is not None:
+        global content
         content = file.read()
         #print(content)
     T.configure(state=NORMAL)
@@ -51,14 +53,16 @@ def open_file1():
     T.insert(0.0,content)
     T.configure(state=DISABLED)
 
+content2 = "test"
 def open_file2():
     file = askopenfile(mode ='r', filetypes =[('Text files', '*.txt')])
     if file is not None:
-        content = file.read()
+        global content2
+        content2 = file.read()
         #print(content)
     T2.configure(state=NORMAL)
     T2.delete(0.0, "end")
-    T2.insert(0.0,content)
+    T2.insert(0.0,content2)
     T2.configure(state=DISABLED)
 
 btn3 = tk.Button(root,bottom_frame,text = "Import File", fg = "red",command=open_file1).pack(side = "right")
@@ -92,44 +96,18 @@ progress = Progressbar(root, orient = HORIZONTAL,
 # Function responsible for the updation
 # of the progress bar value
 
+
 def bar():
+    S_value = pCheck(content,content2)
     import time
-    progress['value'] = 20
+    progress['value'] = S_value
     pDisplay = progress['value']
     DisplayM = Message(root, text = pDisplay)
     DisplayM.pack()
     root.update_idletasks()
     time.sleep(1)
 
-    progress['value'] = 40
-    pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
-    DisplayM.pack()
-    root.update_idletasks()
-    time.sleep(1)
-
-    progress['value'] = 50
-    pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
-    DisplayM.pack()
-    root.update_idletasks()
-    time.sleep(1)
-
-    progress['value'] = 60
-    pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
-    DisplayM.pack()
-    root.update_idletasks()
-    time.sleep(1)
-
-    progress['value'] = 80
-    pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
-    DisplayM.pack()
-    root.update_idletasks()
-    time.sleep(1)
-
-    progress['value'] = 100
+    progress['value'] = S_value
     pDisplay = progress['value']
     DisplayM.config(text = pDisplay)
     DisplayM.config(width=50)
