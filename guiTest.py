@@ -9,6 +9,7 @@ from urllib.request import urlopen
 from PIL import Image
 import requests
 from functions import pCheck
+from functions import efrainspChecker
 
 
 
@@ -98,18 +99,20 @@ progress = Progressbar(root, orient = HORIZONTAL,
 
 
 def bar():
-    S_value = pCheck(content,content2)
+    #changes into new algo
+    #S_value = pCheck(content,content2)
+    S_value = efrainspChecker(content,content2)
     import time
     progress['value'] = S_value
     pDisplay = progress['value']
-    DisplayM = Message(root, text = pDisplay)
+    DisplayM = Message(root, text = str(pDisplay)+"%")
     DisplayM.pack()
     root.update_idletasks()
     time.sleep(1)
 
     progress['value'] = S_value
     pDisplay = progress['value']
-    DisplayM.config(text = pDisplay)
+    DisplayM.config(text = str(pDisplay)+"%")
     DisplayM.config(width=50)
     DisplayM.pack()
     if pDisplay == 100:
