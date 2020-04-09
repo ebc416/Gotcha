@@ -12,6 +12,7 @@ from functions import pCheck
 from functions import efrainspChecker
 
 
+
 root = tk.Tk()
 root.title("GOTCHA")
 url = "https://i.imgur.com/HZCR1G2.png"
@@ -113,6 +114,7 @@ progress = Progressbar(root, orient = HORIZONTAL,
 
 
 def bar():
+
     #S_value = pCheck(content,content2)
     #changes into new algo
     #S_value = pCheck(content,content2)

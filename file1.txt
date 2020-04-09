@@ -14,7 +14,7 @@ It will be deleted in the
 near future.
 
 It is important to spell
-check this document. On
+check this document.On
 the other hand, a
 misspelled word isn't
 the end of the world.
