@@ -137,7 +137,7 @@ def bar():
 
 progress.pack(pady = 1,side = "top")
 
-Button(root, text = 'Scan', command = bar).pack(pady = 10, side = "top")
+Button(root, text = 'Scan', command = bar).pack(pady = 10, side = "bottom")
 
 
 tk.mainloop()
