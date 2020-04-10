@@ -10,6 +10,7 @@ from PIL import Image
 import requests
 from functions import pCheck
 from functions import efrainspChecker
+from functions import read_report
 
 
 
@@ -44,17 +45,20 @@ T2.pack(side=tk.LEFT, padx=10)
 
 
 content = "tested"
+fileone = "none"
+filesec = "none"
 
 def open_file1():
-    file = filedialog.askopenfilename(title="Select File", filetypes=(("Word files", "*.docx"), ("Text files", "*.txt")))
+    global fileone
+    fileone = filedialog.askopenfilename(title="Select File", filetypes=(("Word files", "*.docx"), ("Text files", "*.txt")))
 
 
-    if file is not None:
+    if fileone is not None:
         global content
-        if file[-3:] == "ocx":
-            content = docx2txt.process(file)
-        elif file[-3:] == "txt":
-            infile = open(file,'r')
+        if fileone[-3:] == "ocx":
+            content = docx2txt.process(fileone)
+        elif fileone[-3:] == "txt":
+            infile = open(fileone,'r')
             content = infile.read()
 
 
@@ -65,15 +69,17 @@ def open_file1():
 
 
 content2 = "test"
-def open_file2():
-    file = filedialog.askopenfilename(title="Select File", filetypes= ( ("Word files", "*.docx"), ("Text files", "*.txt") ) )
 
-    if file is not None:
+def open_file2():
+    global filesec
+    filesec = filedialog.askopenfilename(title="Select File", filetypes= ( ("Word files", "*.docx"), ("Text files", "*.txt") ) )
+
+    if filesec is not None:
         global content2
-        if file[-3:] == "ocx":
-            content2 = docx2txt.process(file)
-        elif file[-3:] == "txt":
-            infile = open(file,'r')
+        if filesec[-3:] == "ocx":
+            content2 = docx2txt.process(filesec)
+        elif filesec[-3:] == "txt":
+            infile = open(filesec,'r')
             content2 = infile.read()
 
 
@@ -115,25 +121,31 @@ progress = Progressbar(root, orient = HORIZONTAL,
 
 def bar():
 
-    #S_value = pCheck(content,content2)
-    #changes into new algo
-    #S_value = pCheck(content,content2)
-    S_value = efrainspChecker(content,content2)
-    import time
-    progress['value'] = S_value
-    pDisplay = progress['value']
-    DisplayM = Message(root, text = str(pDisplay)+"%")
-    DisplayM.pack()
-    root.update_idletasks()
-    time.sleep(1)
+    read_report(fileone,filesec)
 
-    progress['value'] = S_value
-    pDisplay = progress['value']
-    DisplayM.config(text = str(pDisplay)+"%")
-    DisplayM.config(width=50)
-    DisplayM.pack()
-    if pDisplay == 100:
-        alert_popup("Gottem!","100%  Plagiarism")
+    if content != "tested":
+        #S_value = pCheck(content,content2)
+        #changes into new algo
+        #S_value = pCheck(content,content2)
+        S_value = efrainspChecker(content,content2)
+        import time
+        progress['value'] = S_value
+        pDisplay = progress['value']
+        DisplayM = Message(root, text = str(pDisplay)+"%")
+        DisplayM.pack()
+        root.update_idletasks()
+        time.sleep(1)
+
+        progress['value'] = S_value
+        pDisplay = progress['value']
+        DisplayM.config(text = str(pDisplay)+"%")
+        DisplayM.config(width=50)
+        DisplayM.pack()
+
+        if pDisplay == 100:
+            alert_popup("Gottem!","100%  Plagiarism")
+
+
 
 progress.pack(pady = 1,side = "top")
 
