@@ -14,6 +14,7 @@ from functions import read_report
 
 
 
+
 root = tk.Tk()
 root.title("GOTCHA")
 url = "https://i.imgur.com/HZCR1G2.png"
@@ -65,7 +66,7 @@ def open_file1():
     T.configure(state=NORMAL)
     T.delete(0.0, "end")
     T.insert(0.0,content)
-    T.configure(state=DISABLED)
+    T.configure(state=NORMAL)
 
 
 content2 = "test"
@@ -86,7 +87,7 @@ def open_file2():
     T2.configure(state=NORMAL)
     T2.delete(0.0, "end")
     T2.insert(0.0,content2)
-    T2.configure(state=DISABLED)
+    T2.configure(state=NORMAL)
 
 btn3 = tk.Button(root,bottom_frame,text = "Import File", fg = "red",command=open_file1).pack(side = "right")
 btn4 = tk.Button(root,bottom_frame,text = "Import File", fg = "green",command=open_file2).pack(side = "left")
@@ -108,8 +109,8 @@ def alert_popup(title, message):
     mainloop()
 
 # Progress bar widget
-pDisplay ='Plagiarism Percentage'
-DisplayM = Message(root, text = pDisplay)
+ptDisplay ='Plagiarism Percentage'
+DisplayM = Message(root, text = ptDisplay)
 DisplayM.config(bg='lightgreen',width=200)
 DisplayM.pack(side = "top")
 
@@ -117,39 +118,52 @@ progress = Progressbar(root, orient = HORIZONTAL,
               length = 200, mode = 'determinate')
 # Function responsible for the updation
 # of the progress bar value
-
+DisplayMsg = Message(root,text = "0%")
 
 def bar():
 
     read_report(fileone,filesec)
 
     if content != "tested":
+        global DisplayMsg
         #S_value = pCheck(content,content2)
         #changes into new algo
         #S_value = pCheck(content,content2)
         S_value = efrainspChecker(content,content2)
-        import time
         progress['value'] = S_value
         pDisplay = progress['value']
-        DisplayM = Message(root, text = str(pDisplay)+"%")
-        DisplayM.pack()
+        DisplayMsg = Message(root, text = str(pDisplay)+"%")
+        DisplayMsg.pack()
         root.update_idletasks()
-        time.sleep(1)
 
-        progress['value'] = S_value
-        pDisplay = progress['value']
-        DisplayM.config(text = str(pDisplay)+"%")
-        DisplayM.config(width=50)
-        DisplayM.pack()
+
+        #progress['value'] = 100
+        #pDisplay = progress['value']
+        #DisplayM.config(text = str(pDisplay)+"%")
+        #DisplayM.config(width=50)
+        #DisplayM.pack()
 
         if pDisplay == 100:
             alert_popup("Gottem!","100%  Plagiarism")
 
-
-
 progress.pack(pady = 1,side = "top")
 
+def Clear():
+    global DisplayMsg
+    T.delete("1.0","end")
+    T.update()
+    T2.delete("1.0","end")
+    T2.update()
+    progress['value'] = 0
+    pDisplay = progress['value']
+    DisplayMsg.config(text = str(pDisplay)+"%")
+    root.update_idletasks()
+
+
+
+
 Button(root, text = 'Scan', command = bar).pack(pady = 10, side = "bottom")
+Button(root, text = 'Clear', command = Clear).pack(pady = 10, side = "top")
 
 
 tk.mainloop()

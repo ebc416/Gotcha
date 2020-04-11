@@ -1,18 +1,18 @@
 this paragraph needs to
-version.  It shouldn't
-misspelled word isn't
-change.  Otherwise, that
-It is important to spell
-This part of the
 be added after it.
-same from version to
-be changed. Things can
-This paragraph contains
-the end of the world.
-the other hand, a
-be shown if it doesn't
 compress the size of the
-Nothing in the rest of
-would not be helping to
-document has stayed the
+It is important to spell
+the other hand, a
+same from version to
+change.  Otherwise, that
+be changed. Things can
 changes.
+This paragraph contains
+would not be helping to
+be shown if it doesn't
+the end of the world.
+misspelled word isn't
+Nothing in the rest of
+document has stayed the
+version.  It shouldn't
+This part of the
