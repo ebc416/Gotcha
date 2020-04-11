@@ -118,21 +118,27 @@ progress = Progressbar(root, orient = HORIZONTAL,
               length = 200, mode = 'determinate')
 # Function responsible for the updation
 # of the progress bar value
-DisplayMsg = Message(root,text = "0%")
+global scoreTracker
+scoreTracker = StringVar()
+scoreTracker.set("0%")
+global DisplayMsg
+DisplayMsg = Label(root,textvariable = scoreTracker)
+#DisplayMsg.pack()
 
 def bar():
 
     read_report(fileone,filesec)
 
     if content != "tested":
-        global DisplayMsg
+        #global DisplayMsg
         #S_value = pCheck(content,content2)
         #changes into new algo
         #S_value = pCheck(content,content2)
         S_value = efrainspChecker(content,content2)
         progress['value'] = S_value
         pDisplay = progress['value']
-        DisplayMsg = Message(root, text = str(pDisplay)+"%")
+        scoreTracker.set(str(pDisplay)+"%")
+        #DisplayMsg = Label(root, textvariable = scoreTracker)
         DisplayMsg.pack()
         root.update_idletasks()
 
@@ -156,7 +162,13 @@ def Clear():
     T2.update()
     progress['value'] = 0
     pDisplay = progress['value']
-    DisplayMsg.config(text = str(pDisplay)+"%")
+    #DisplayMsg.config(text = str(pDisplay
+    if pDisplay == 0:
+        scoreTracker.set("")
+    else:
+        scoreTracker.set(str(pDisplay)+"%")
+    #DisplayMsg.config(textvariable = scoreTracker)
+    #DisplayMsg.pack()
     root.update_idletasks()
 
 
