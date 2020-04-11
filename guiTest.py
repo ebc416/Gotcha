@@ -45,9 +45,9 @@ T2 = tk.Text(root, height=10, width=30,borderwidth = 2, relief="groove")
 T2.pack(side=tk.LEFT, padx=10)
 
 
-content = "tested"
-fileone = "none"
-filesec = "none"
+content = None
+fileone = None
+filesec = None
 
 def open_file1():
     global fileone
@@ -69,7 +69,7 @@ def open_file1():
     T.configure(state=NORMAL)
 
 
-content2 = "test"
+content2 = None
 
 def open_file2():
     global filesec
@@ -129,7 +129,7 @@ def bar():
 
     read_report(fileone,filesec)
 
-    if content != "tested":
+    if fileone != None:
         #global DisplayMsg
         #S_value = pCheck(content,content2)
         #changes into new algo
@@ -155,6 +155,11 @@ def bar():
 progress.pack(pady = 1,side = "top")
 
 def Clear():
+    global content, content2,fileone,filesec
+    content = None
+    content2 = None
+    fileone = None
+    filesec = None
     global DisplayMsg
     T.delete("1.0","end")
     T.update()
@@ -165,7 +170,7 @@ def Clear():
     #DisplayMsg.config(text = str(pDisplay
     if pDisplay == 0:
         scoreTracker.set("")
-    else:
+    elif content != "none":
         scoreTracker.set(str(pDisplay)+"%")
     #DisplayMsg.config(textvariable = scoreTracker)
     #DisplayMsg.pack()
