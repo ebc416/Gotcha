@@ -42,10 +42,10 @@ bottom_frame = tk.Frame(root).pack(side = "bottom")
 
 w1 = tk.Label(root, image = logo,relief = "raised").pack(side="top",pady = 10)
 
-T = tk.Text(root,top_frame,height=15, width=38,borderwidth = 2, relief="groove")
+T = tk.Text(root,top_frame,height=15, width=30,borderwidth = 2, relief="groove")
 T.pack(side=tk.RIGHT,padx=10)
 
-T2 = tk.Text(root,top_frame, height=15, width=38,borderwidth = 2, relief="groove")
+T2 = tk.Text(root,top_frame, height=15, width=30,borderwidth = 2, relief="groove")
 T2.pack(side=tk.LEFT, padx=10)
 
 T3 = tk.Text(root,bottom_frame,height=5,width=30,borderwidth = 2, relief="ridge")
@@ -119,11 +119,11 @@ def alert_popup(title, message):
 # Progress bar widget
 ptDisplay ='Plagiarism Percentage'
 DisplayM = Message(root, text = ptDisplay)
-DisplayM.config(bg='lightgreen',width=200,relief="raised")
+DisplayM.config(bg='lightgreen',width=500,relief="raised")
 DisplayM.pack(side = "top")
 
 progress = Progressbar(root, orient = HORIZONTAL,
-              length = 200, mode = 'determinate')
+              length = 500, mode = 'determinate')
 # Function responsible for the updation
 # of the progress bar value
 global scoreTracker
