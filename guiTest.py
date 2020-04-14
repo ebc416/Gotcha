@@ -11,6 +11,7 @@ import requests
 from functions import pCheck
 from functions import efrainspChecker
 from functions import read_report
+from functions import highlight
 
 
 
@@ -123,12 +124,17 @@ scoreTracker = StringVar()
 scoreTracker.set("0%")
 global DisplayMsg
 DisplayMsg = Label(root,textvariable = scoreTracker)
-#DisplayMsg.pack()
 
 def bar():
-
     read_report(fileone,filesec)
-
+    #open similarFile and read line by line removing \n to search in our two text files
+    with open("real_similarities.txt") as similarFile:
+        sequence = similarFile.readlines()
+        for line in sequence:
+            highlight(T,line.strip())
+            highlight(T2,line.strip())
+            #print(line.strip())
+    similarFile.close()
     if fileone != None:
         #global DisplayMsg
         #S_value = pCheck(content,content2)
@@ -142,13 +148,6 @@ def bar():
         DisplayMsg.pack()
         root.update_idletasks()
 
-
-        #progress['value'] = 100
-        #pDisplay = progress['value']
-        #DisplayM.config(text = str(pDisplay)+"%")
-        #DisplayM.config(width=50)
-        #DisplayM.pack()
-
         if pDisplay == 100:
             alert_popup("Gottem!","100%  Plagiarism")
 
@@ -160,27 +159,19 @@ def Clear():
     content2 = None
     fileone = None
     filesec = None
-    global DisplayMsg
     T.delete("1.0","end")
     T.update()
     T2.delete("1.0","end")
     T2.update()
     progress['value'] = 0
     pDisplay = progress['value']
-    #DisplayMsg.config(text = str(pDisplay
     if pDisplay == 0:
         scoreTracker.set("")
     elif content != "none":
         scoreTracker.set(str(pDisplay)+"%")
-    #DisplayMsg.config(textvariable = scoreTracker)
-    #DisplayMsg.pack()
     root.update_idletasks()
-
-
-
 
 Button(root, text = 'Scan', command = bar).pack(pady = 10, side = "bottom")
 Button(root, text = 'Clear', command = Clear).pack(pady = 10, side = "top")
-
 
 tk.mainloop()

@@ -33,3 +33,23 @@ def read_report(file_one,file_two):
         with open('report.txt','w') as file_out:
             for line in same:
                 file_out.write(line)
+
+def highlight(text,seq):
+    # get string to look for (if empty, no searching)
+    #s = "document has stayed the"
+    s = seq
+    if s:
+        # start from the beginning (and when we come to the end, stop)
+        idx = '1.0'
+        while 1:
+            # find next occurrence, exit loop if no more
+            idx = text.search(s, idx, nocase=1, stopindex='end')
+            if not idx: break
+            # index right after the end of the occurrence
+            lastidx = '%s+%dc' % (idx, len(s))
+            # tag the whole occurrence (start included, stop excluded)
+            text.tag_add('found', idx, lastidx)
+            # prepare to search for next occurrence
+            idx = lastidx
+        # use a red foreground for all the tagged occurrences
+        text.tag_config('found', foreground='red')
