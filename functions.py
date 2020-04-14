@@ -2,14 +2,19 @@
 import re
 import difflib
 import docx2txt
+import math
+import string
+import sys
 from difflib import SequenceMatcher
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+
+translation_table = str.maketrans(string.punctuation + string.ascii_uppercase," " * len(string.punctuation) + string.ascii_lowercase)
 
 def pCheck(file1_data,file2_data):
     similarity_ratio = SequenceMatcher(None,file1_data,file2_data).ratio()
     return int(similarity_ratio * 100)
 
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
 
 def efrainspChecker(file1_data,file2_data):
     #for testing purposes
@@ -72,3 +77,76 @@ def highlight(text,seq):
             idx = lastidx
         # use a red foreground for all the tagged occurrences
         text.tag_config('found', foreground='red')
+
+def get_words_from_line_list(text):
+
+    text = text.translate(translation_table)
+    word_list = text.split()
+
+    return word_list
+
+
+def count_frequency(word_list):
+
+    D = {}
+
+    for new_word in word_list:
+
+        if new_word in D:
+            D[new_word] = D[new_word] + 1
+
+        else:
+            D[new_word] = 1
+
+    return D
+
+
+def word_frequencies_for_file(text_content):
+
+    line_list = text_content
+    word_list = get_words_from_line_list(line_list)
+    freq_mapping = count_frequency(word_list)
+
+
+    return freq_mapping
+
+def stats(tcontent):
+    printout = "Stats:\n"
+    line_list = tcontent
+    word_list = get_words_from_line_list(line_list)
+    freq_mapping = count_frequency(word_list)
+
+    strLine = str(len(line_list))
+    strWrd = str(len(word_list))
+    strFrq = str(len(freq_mapping))
+    printout += str(strLine + " lines.\n")
+    printout += str(strWrd+ " lines.\n")
+    printout += str(strFrq + " unique words.\n")
+
+    return printout
+
+
+def dotProduct(D1, D2):
+    Sum = 0.0
+
+    for key in D1:
+
+        if key in D2:
+            Sum += (D1[key] * D2[key])
+
+    return Sum
+
+def vector_angle(D1, D2):
+    numerator = dotProduct(D1, D2)
+    denominator = math.sqrt(dotProduct(D1, D1)*dotProduct(D2, D2))
+
+    return math.acos(numerator / denominator)
+
+
+def documentSimilarity(store1,store2):
+
+    sorted_word_list_1 = word_frequencies_for_file(store1)
+    sorted_word_list_2 = word_frequencies_for_file(store2)
+
+    distance = vector_angle(sorted_word_list_1, sorted_word_list_2)
+    print("Similarity Score: % 0.6f "% distance)
