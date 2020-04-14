@@ -135,7 +135,7 @@ DisplayMsg = Label(root,textvariable = scoreTracker)
 
 def bar():
     read_report(fileone,filesec)
-      #open similarFile and read line by line removing \n to search in our two text files
+    #open similarFile and read line by line removing \n to search in our two text files
     with open("real_similarities.txt") as similarFile:
         sequence = similarFile.readlines()
         for line in sequence:
@@ -156,7 +156,6 @@ def bar():
         #DisplayMsg = Label(root, textvariable = scoreTracker)
         DisplayMsg.pack(pady = 10,side = "top")
         root.update_idletasks()
-
         loadIn = stats(content)
         T3.configure(state=NORMAL)
         #T3.delete(0.0, "end")
