@@ -134,31 +134,20 @@ DisplayMsg = Label(root,textvariable = scoreTracker)
 
 
 def bar():
-    read_report(fileone,filesec)
-    #open similarFile and read line by line removing \n to search in our two text files
-    with open("real_similarities.txt") as similarFile:
-        sequence = similarFile.readlines()
-        for line in sequence:
-            highlight(T,line.strip())
-            highlight(T2,line.strip())
-            #print(line.strip())
-    similarFile.close()
+    sequence = read_report(fileone,filesec)
+    for line in sequence:
+        highlight(T,line.strip())
+        highlight(T2,line.strip())
 
     if fileone != None:
-        #global DisplayMsg
-        #S_value = pCheck(content,content2)
-        #changes into new algo
-        #S_value = pCheck(content,content2)
         S_value = efrainspChecker(content,content2)
         progress['value'] = S_value
         pDisplay = progress['value']
         scoreTracker.set(str(pDisplay)+"%")
-        #DisplayMsg = Label(root, textvariable = scoreTracker)
         DisplayMsg.pack(pady = 10,side = "top")
         root.update_idletasks()
         loadIn = stats(content)
         T3.configure(state=NORMAL)
-        #T3.delete(0.0, "end")
         T3.insert(2.0,"Right-Side File\n")
         T3.insert(3.0,loadIn)
         loadIn2 = stats(content2)

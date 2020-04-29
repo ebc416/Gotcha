@@ -25,23 +25,27 @@ def efrainspChecker(file1_data,file2_data):
 
 def read_report(file_one,file_two):
     if (file_one != None and file_two != None):
-        # with open(file_one,'r') as file1:
-        #     with open(file_two,'r') as file2:
         if file_one[-3:] == "ocx":
-            list1 = docx2txt.process(file_one)
-            list2 = docx2txt.process(file_two)
-                    #same = set(content).intersection(content2)
-                #elif file_one[-3:] == "txt":
-                    #same = set(file1).intersection(file2)
+            rev_list1 = docx2txt.process(file_one)
+            rev_list2 = docx2txt.process(file_two)
+            list1 = rev_list1.splitlines()
+            list2 = rev_list2.splitlines()
+            # print("this is a list1")
+            # print(list1)
+            # print("this is a list2")
+            # print(list2)
+            same = set(list1).intersection(list2)
+            return same
         else:
             list1 = open(file_one).readlines()
             list2 = open(file_two).readlines()
+            print("this is a list1")
+            print(list1)
+            print("this is a list2")
+            print(list2)
 
-        file3 = open('report.txt', 'w')
-        for i in list1:
-            for j in list2:
-                if i == j:
-                    file3.write(i)
+            same = set(list1).intersection(list2)
+            return same
 
 def highlight(text,seq):
     # get string to look for (if empty, no searching)
