@@ -2,6 +2,7 @@ import tkinter as tk
 import time
 import base64
 import docx2txt
+import re
 from tkinter.ttk import *
 from tkinter import *
 from tkinter import filedialog
@@ -13,7 +14,8 @@ from functions import efrainspChecker
 from functions import read_report
 from functions import documentSimilarity
 from functions import stats
-from functions import highlight
+from functions import highlightfile_docs
+from functions import highlight_typedtxts
 
 
 
@@ -51,8 +53,6 @@ T2.pack(side=tk.LEFT, padx=10)
 T3 = tk.Text(root,bottom_frame,height=5,width=30,borderwidth = 2, relief="ridge")
 T3.pack(side=tk.BOTTOM,pady=5)
 
-T3.insert(1.0,"          Statistics:\n")
-T3.configure(state=DISABLED)
 
 content = None
 fileone = None
@@ -116,6 +116,18 @@ def alert_popup(title, message):
     b.pack()
     mainloop()
 
+def alert_popup2(title, message):
+    root2 = tk.Toplevel()
+    #canvas = tk.Canvas(root2,width = 200, height = 200, bg = 'white')
+    #canvas.pack(expand = YES, fill = BOTH)
+    #canvas.create_image(50, 50, image = logo2, anchor = NW)
+    m = message
+    m += '\n'
+    w = Label(root2, text=m, width=40, height= 5)
+    w.pack()
+    b = Button(root2, text="OK", command=root2.destroy, width=10)
+    b.pack()
+    mainloop()
 # Progress bar widget
 ptDisplay ='Plagiarism Percentage'
 DisplayM = Message(root, text = ptDisplay)
@@ -135,22 +147,62 @@ DisplayMsg = Label(root,textvariable = scoreTracker)
 
 def bar():
     sequence = read_report(fileone,filesec)
-    for line in sequence:
-        highlight(T,line.strip())
-        highlight(T2,line.strip())
+    if sequence != "Error" and sequence != None:
+        for line in sequence:
+            highlightfile_docs(T,line.strip())
+            highlightfile_docs(T2,line.strip())
 
-    if fileone != None:
-        S_value = efrainspChecker(content,content2)
+        if fileone != None:
+            #S_value = pCheck(content,content2)
+            S_value = efrainspChecker(content,content2)
+            progress['value'] = S_value
+            pDisplay = progress['value']
+            scoreTracker.set(str(pDisplay)+"%")
+            DisplayMsg.pack(pady = 10,side = "top")
+            root.update_idletasks()
+            loadIn = stats(content)
+            T3.configure(state=NORMAL)
+            T3.insert(1.0,"          Statistics:\n")
+            T3.insert(2.0,"Right-Side File\n")
+            T3.insert(3.0,loadIn)
+            loadIn2 = stats(content2)
+            T3.insert(8.0,"\nLeft-Side File\n")
+            T3.insert(9.0,loadIn2)
+            T3.configure(state=DISABLED)
+
+            if pDisplay == 100:
+                alert_popup("Gottem!","100%  Plagiarism")
+            #progress.pack(pady = 1,side = "top")
+
+    elif sequence == "Error":
+        alert_popup2("Error","Error Code: DD899KN\nCannot input two different file types!")
+
+    elif sequence == None:
+        input = T.get("0.0","end")
+        input2 = T2.get("0.0", "end")
+
+        li = re.split('[ .,:;/]', input)
+        li2 = re.split('[ .,:;/]', input2)
+        same = set(li).intersection(li2)
+
+        for line in same:
+            print(line)
+            highlight_typedtxts(T,line)
+            highlight_typedtxts(T2,line)
+
+        #documentSimilarity(input,input2)
+        S_value = pCheck(input,input2)
         progress['value'] = S_value
         pDisplay = progress['value']
         scoreTracker.set(str(pDisplay)+"%")
         DisplayMsg.pack(pady = 10,side = "top")
         root.update_idletasks()
-        loadIn = stats(content)
+        loadIn = stats(input)
         T3.configure(state=NORMAL)
+        T3.insert(1.0,"          Statistics:\n")
         T3.insert(2.0,"Right-Side File\n")
         T3.insert(3.0,loadIn)
-        loadIn2 = stats(content2)
+        loadIn2 = stats(input2)
         T3.insert(8.0,"\nLeft-Side File\n")
         T3.insert(9.0,loadIn2)
         T3.configure(state=DISABLED)
@@ -171,7 +223,7 @@ def Clear():
     T2.delete("1.0","end")
     T2.update()
     T3.configure(state = NORMAL)
-    T3.delete("2.0","end")
+    T3.delete("1.0","end")
     T3.update()
     T3.configure(state = DISABLED)
     progress['value'] = 0
